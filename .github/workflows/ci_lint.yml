@@ -35,6 +35,7 @@ jobs:
       - name: MegaLinter
         id: ml
         continue-on-error: true
+        # zizmor: ignore[unpinned-uses] rolling beta test
         uses: Wuodan/megalinter@beta
         env:
           VALIDATE_ALL_CODEBASE: true
