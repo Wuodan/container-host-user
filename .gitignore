@@ -5,6 +5,8 @@
 .classpath
 .settings/
 bin/
+!bin/
+!bin/container-host-user
 .metadata/
 *.launch
 
