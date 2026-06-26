@@ -1,0 +1,8 @@
+misconfigurations:
+  - id: AVD-DS-0002
+    paths:
+      - tests/images/Dockerfile
+      - tests/images/hook-callback.Dockerfile
+      - tests/images/httpd-pressure.Dockerfile
+      - tests/images/no-backend.Dockerfile
+    statement: Test Dockerfiles intentionally run as root.
