@@ -19,39 +19,21 @@ This project provides a small shell script that:
 
 It is designed to be dropped into existing images and existing entrypoints.
 
-## Supported targets
+## What You Add To An Image
 
-Primary targets:
+You add one script to your image and call it from an entrypoint that still
+starts as `root`.
 
-- Alpine
-- Debian
-- Fedora
-- Ubuntu
+Your image must also provide either `gosu` or `su-exec`.
 
-Additional matrix coverage:
-
-- Arch Linux
-
-The script avoids distro-specific assumptions where possible and chooses the
-available tooling at runtime.
-
-## Files
-
-- `bin/container-host-user`: reusable runtime-user provisioning script
-- `examples/megalinter-entrypoint-hook.sh`: entrypoint hook pattern
-- `tests/run.sh`: wrapper to run the full test suite
-- `docs/TESTS.md`: skimmable test coverage map
-- `tests/bats/`: Docker-based cross-distro tests grouped by concern
-
-## Usage
-
-Copy the script into your image and call it from an entrypoint that still starts
-as `root`. Your image must also provide either `gosu` or `su-exec`.
+<!-- Dockerfile example is weak but we will extends this later -->
 
 ```dockerfile
 COPY bin/container-host-user /usr/local/bin/container-host-user
 RUN apt-get update && apt-get install -y --no-install-recommends gosu
 ```
+
+<!-- Needs improvement, later ... -->
 
 Minimal wrapper:
 
@@ -62,7 +44,7 @@ set -eu
 exec /usr/local/bin/container-host-user /entrypoint.sh "$@"
 ```
 
-Typical runtime configuration:
+At runtime, pass the host uid/gid:
 
 ```sh
 docker run --rm \
@@ -73,6 +55,18 @@ docker run --rm \
   -v "$PWD:/workspace" \
   your-image
 ```
+
+## Where It Fits
+
+This is meant for the common case where bind mounts should receive host-owned
+files instead of `root`-owned files:
+
+- the container starts as `root`
+- the actual application can run as a non-root user
+
+It avoids distro-specific assumptions where possible and chooses available user
+management tools at runtime. The current test matrix covers Alpine, Arch Linux,
+Debian, Fedora, and Ubuntu.
 
 ## Environment variables
 
@@ -87,22 +81,7 @@ docker run --rm \
   reuse and add to the runtime user. Useful for mounted resources such as
   Docker sockets.
 
-## Behavior
-
-- If the process is not running as `root`, it directly `exec`s the target
-  command.
-- If `CHU_UID` or `CHU_GID` is missing, it directly `exec`s the target command.
-- If a user with the requested UID already exists, it is reused.
-- If a group with the requested GID already exists, it is reused.
-- If the preferred user or group name already exists with conflicting IDs, the
-  script removes and recreates that account.
-- The script creates the target home directory and attempts to own it.
-- The script can add the runtime user to supplemental groups via
-  `CHU_EXTRA_GIDS`.
-- The script requires one supported privilege-drop backend:
-  `gosu` or `su-exec`.
-
-## Example integration
+## Existing Entrypoint Hook
 
 Pattern for an existing entrypoint:
 
@@ -123,20 +102,3 @@ exec /entrypoint.sh "$@"
 
 See [examples/megalinter-entrypoint-hook.sh](examples/megalinter-entrypoint-hook.sh)
 for a concrete hook example.
-
-## Tests
-
-Run:
-
-```sh
-./tests/run.sh
-```
-
-The `bats` suite includes shell syntax checks, a direct no-op execution check,
-and Docker-based Alpine, Arch Linux, Debian, Fedora, and Ubuntu integration
-coverage against real container entrypoints.
-
-The suite also includes a real-application pressure test based on the official
-`httpd` image.
-
-See [docs/TESTS.md](docs/TESTS.md) for the coverage map by use-case group.
