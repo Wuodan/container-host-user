@@ -6,4 +6,7 @@ set -eu
 
 repo_root=$(CDPATH='' cd -- "$(dirname "$0")/.." && pwd)
 
-exec bats --recursive "${repo_root}/tests/bats"
+exec bats \
+  --recursive \
+  --setup-suite-file "${repo_root}/tests/bats/setup_suite.sh" \
+  "${repo_root}/tests/bats"
