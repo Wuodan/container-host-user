@@ -31,6 +31,7 @@
     "shfmt",
     "skimmable",
     "userdel",
-    "usermod"
+    "usermod",
+    "wuodan"
   ]
 }
