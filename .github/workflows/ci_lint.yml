@@ -48,4 +48,4 @@ jobs:
           # new non-root user feature
           MEGALINTER_UID: ${{ env.MEGALINTER_UID }}
           MEGALINTER_GID: ${{ env.MEGALINTER_GID }}
-          MEGALINTER_USER:  ${{ env.MEGALINTER_USER }}
+          MEGALINTER_USER: ${{ env.MEGALINTER_USER }}
