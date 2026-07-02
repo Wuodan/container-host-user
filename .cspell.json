@@ -1,9 +1,9 @@
 {
   "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
-  "version": "0.2",
-  "language": "en",
   "ignorePaths": ["**/.git/**"],
   "words": [
+    "Buildx",
+    "buildx",
     "DFOREGROUND",
     "Dockerfiles",
     "GIDS",
@@ -25,11 +25,15 @@
     "hostuser",
     "httpdhost",
     "ignorefile",
+    "joshjohanning",
     "metacharacters",
     "noconfirm",
     "pacman",
+    "pipefail",
     "shfmt",
+    "sigstore",
     "skimmable",
+    "softprops",
     "userdel",
     "usermod",
     "wuodan"
