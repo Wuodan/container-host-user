@@ -1,4 +1,5 @@
 ARG BASE_IMAGE
+# checkov:skip=CKV_DOCKER_7:Ensure the base image uses a non latest version tag
 FROM ${BASE_IMAGE}
 
 ARG GOSU_VERSION=1.17
