@@ -1,6 +1,15 @@
 misconfigurations:
   - id: AVD-DS-0002
     paths:
+      - Dockerfile
+    statement: Dockerfile in root is just for packaging with 'FROM scratch'
+  - id: AVD-DS-0026
+    paths:
+      - Dockerfile
+    statement: Dockerfile in root is just for packaging with 'FROM scratch'
+  - id: AVD-DS-0002
+    paths:
+      - Dockerfile
       - tests/images/Dockerfile
       - tests/images/hook-callback.Dockerfile
       - tests/images/httpd-pressure.Dockerfile
