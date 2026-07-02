@@ -33,6 +33,18 @@ COPY bin/container-host-user /usr/local/bin/container-host-user
 RUN apt-get update && apt-get install -y --no-install-recommends gosu
 ```
 
+OCI image form:
+
+```dockerfile
+FROM ghcr.io/wuodan/container-host-user:latest AS container_host_user
+FROM your-base-image
+
+COPY --from=container_host_user \
+  /usr/local/bin/container-host-user \
+  /usr/local/bin/container-host-user
+RUN apt-get update && apt-get install -y --no-install-recommends gosu
+```
+
 <!-- Needs improvement, later ... -->
 
 Minimal wrapper:
