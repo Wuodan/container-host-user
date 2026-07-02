@@ -4,8 +4,7 @@ FROM ${BASE_IMAGE}
 COPY bin/container-host-user /usr/local/bin/container-host-user
 
 # hadolint ignore=DL3008,DL3041 # This is for tests only
-RUN chmod +x /usr/local/bin/container-host-user \
-  && if [ -f /etc/alpine-release ]; then \
+RUN if [ -f /etc/alpine-release ]; then \
        apk add --no-cache shadow; \
      elif [ -f /etc/arch-release ]; then \
        pacman -Sy --noconfirm shadow; \

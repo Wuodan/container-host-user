@@ -51,7 +51,6 @@ as `root`. Your image must also provide either `gosu` or `su-exec`.
 ```dockerfile
 COPY bin/container-host-user /usr/local/bin/container-host-user
 RUN apt-get update && apt-get install -y --no-install-recommends gosu
-RUN chmod +x /usr/local/bin/container-host-user
 ```
 
 Minimal wrapper:
@@ -130,7 +129,7 @@ for a concrete hook example.
 Run:
 
 ```sh
-sh tests/run.sh
+./tests/run.sh
 ```
 
 The `bats` suite includes shell syntax checks, a direct no-op execution check,
